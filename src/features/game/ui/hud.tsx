@@ -1,10 +1,16 @@
-import type {ReactNode} from "react";
-import {Grid2x2, RotateCcw, Settings, Shuffle, Undo2} from "lucide-react";
-import {Link} from "@tanstack/react-router";
+import type { ReactNode } from "react";
+import { Grid2x2, RotateCcw, Settings, Shuffle, Undo2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
-import {Button} from "#/components/ui/button";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle,} from "#/components/ui/sheet";
-import {useGameStore} from "../store/game-store";
+import { Button } from "#/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "#/components/ui/sheet";
+import { useGameStore } from "../store/game-store";
 
 export function GameHud() {
   const size = useGameStore((state) => state.size);

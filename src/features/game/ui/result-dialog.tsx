@@ -1,17 +1,17 @@
-import {Trophy} from "lucide-react";
+import { Trophy } from "lucide-react";
 
-import {Badge} from "#/components/ui/badge";
-import {Button} from "#/components/ui/button";
+import { Badge } from "#/components/ui/badge";
+import { Button } from "#/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "#/components/ui/dialog";
-import {useGameStore} from "../store/game-store";
-import {formatElapsed} from "./format";
+import { useGameStore } from "../store/game-store";
+import { formatElapsed } from "./format";
 
 export function ResultDialog() {
   const resultOpen = useGameStore((state) => state.resultOpen);

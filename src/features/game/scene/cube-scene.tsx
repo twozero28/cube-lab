@@ -1,14 +1,14 @@
-import {Suspense, useEffect, useMemo, useRef} from "react";
-import {Canvas, type ThreeEvent} from "@react-three/fiber";
-import {Environment, Float} from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Canvas, type ThreeEvent } from "@react-three/fiber";
+import { Environment, Float } from "@react-three/drei";
 import * as THREE from "three";
 
-import {CubieMesh} from "./cubie-mesh";
-import {CameraRig} from "./camera-rig";
-import {deriveMoveIntent} from "../engine/gesture";
-import {useGameStore} from "../store/game-store";
+import { CubieMesh } from "./cubie-mesh";
+import { CameraRig } from "./camera-rig";
+import { deriveMoveIntent } from "../engine/gesture";
+import { useGameStore } from "../store/game-store";
 
-import type {CubieState, Face, Move} from "../engine/types";
+import type { CubieState, Face, Move } from "../engine/types";
 
 interface PointerSession {
   cubieId: string;

@@ -1,4 +1,4 @@
-import {OrbitControls} from '@react-three/drei'
+import { OrbitControls } from "@react-three/drei";
 
 export function CameraRig({ enabled }: { enabled: boolean }) {
   return (
@@ -12,5 +12,5 @@ export function CameraRig({ enabled }: { enabled: boolean }) {
       maxAzimuthAngle={Math.PI / 2}
       rotateSpeed={0.8}
     />
-  )
+  );
 }

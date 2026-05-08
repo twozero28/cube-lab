@@ -1,5 +1,6 @@
-node_modules
-dist
-.tanstack
+# Prettier is intentionally scoped to application source files.
+*
+!src/
+!src/**
+
 src/routeTree.gen.ts
-bun.lock

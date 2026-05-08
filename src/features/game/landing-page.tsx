@@ -1,8 +1,8 @@
-import {lazy, Suspense, useEffect, useState} from "react";
-import {Link} from "@tanstack/react-router";
-import {Github, Grid2x2, Sparkles} from "lucide-react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { Github, Grid2x2, Sparkles } from "lucide-react";
 
-import {Button} from "#/components/ui/button";
+import { Button } from "#/components/ui/button";
 
 const LandingCubePreview = lazy(async () => {
   const module = await import("./scene/landing-cube-preview");

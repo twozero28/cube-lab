@@ -1,5 +1,5 @@
-import {createFileRoute} from "@tanstack/react-router";
-import {LandingPage} from "#/features/game/landing-page";
+import { createFileRoute } from "@tanstack/react-router";
+import { LandingPage } from "#/features/game/landing-page";
 
 export const Route = createFileRoute("/")({
   head: () => ({

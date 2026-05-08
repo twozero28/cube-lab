@@ -1,6 +1,6 @@
-import {rotateVector} from "./cube";
+import { rotateVector } from "./cube";
 
-import type {Axis, Face, Move, TurnDirection, Vec3} from "./types";
+import type { Axis, Face, Move, TurnDirection, Vec3 } from "./types";
 
 const FACE_BASIS: Record<
   Face,

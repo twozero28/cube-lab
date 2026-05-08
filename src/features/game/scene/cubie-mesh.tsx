@@ -1,14 +1,14 @@
-import type {ThreeEvent} from '@react-three/fiber'
+import type { ThreeEvent } from "@react-three/fiber";
 
-import {getCubieDimension, getWorldPosition} from '../engine/cube'
+import { getCubieDimension, getWorldPosition } from "../engine/cube";
 
-import type {CubeSize, CubieState, Face} from '../engine/types'
+import type { CubeSize, CubieState, Face } from "../engine/types";
 
 const FACE_TRANSFORMS: Record<
   Face,
   {
-    position: [number, number, number]
-    rotation: [number, number, number]
+    position: [number, number, number];
+    rotation: [number, number, number];
   }
 > = {
   F: { position: [0, 0, 0.501], rotation: [0, 0, 0] },
@@ -17,7 +17,7 @@ const FACE_TRANSFORMS: Record<
   D: { position: [0, -0.501, 0], rotation: [Math.PI / 2, 0, 0] },
   R: { position: [0.501, 0, 0], rotation: [0, Math.PI / 2, 0] },
   L: { position: [-0.501, 0, 0], rotation: [0, -Math.PI / 2, 0] },
-}
+};
 
 export function CubieMesh({
   cubie,
@@ -28,23 +28,23 @@ export function CubieMesh({
   onFacePointerEnter,
   onFacePointerLeave,
 }: {
-  cubie: CubieState
-  size: CubeSize
-  highlighted: boolean
-  hoveredFace: Face | null
-  onFacePointerDown: (event: ThreeEvent<PointerEvent>, face: Face) => void
-  onFacePointerEnter: (face: Face) => void
-  onFacePointerLeave: () => void
+  cubie: CubieState;
+  size: CubeSize;
+  highlighted: boolean;
+  hoveredFace: Face | null;
+  onFacePointerDown: (event: ThreeEvent<PointerEvent>, face: Face) => void;
+  onFacePointerEnter: (face: Face) => void;
+  onFacePointerLeave: () => void;
 }) {
-  const dimension = getCubieDimension(size)
-  const position = getWorldPosition(cubie.position, size)
+  const dimension = getCubieDimension(size);
+  const position = getWorldPosition(cubie.position, size);
 
   return (
     <group position={position}>
       <mesh castShadow receiveShadow>
         <boxGeometry args={[dimension, dimension, dimension]} />
         <meshStandardMaterial
-          color={highlighted ? '#1a2338' : '#111827'}
+          color={highlighted ? "#1a2338" : "#111827"}
           metalness={0.15}
           roughness={0.48}
         />
@@ -52,10 +52,10 @@ export function CubieMesh({
 
       {Object.entries(cubie.stickers).map(([face, color]) => {
         if (!color) {
-          return null
+          return null;
         }
 
-        const transform = FACE_TRANSFORMS[face as Face]
+        const transform = FACE_TRANSFORMS[face as Face];
 
         return (
           <mesh
@@ -64,21 +64,21 @@ export function CubieMesh({
             rotation={transform.rotation}
             onPointerDown={(event) => onFacePointerDown(event, face as Face)}
             onPointerEnter={(event) => {
-              event.stopPropagation()
-              onFacePointerEnter(face as Face)
+              event.stopPropagation();
+              onFacePointerEnter(face as Face);
             }}
             onPointerLeave={onFacePointerLeave}
           >
             <planeGeometry args={[dimension * 0.82, dimension * 0.82]} />
             <meshStandardMaterial
               color={color}
-              emissive={hoveredFace === face ? color : '#000000'}
+              emissive={hoveredFace === face ? color : "#000000"}
               emissiveIntensity={hoveredFace === face ? 0.35 : 0}
               metalness={0.05}
               roughness={0.28}
             />
           </mesh>
-        )
+        );
       })}
 
       {highlighted ? (
@@ -88,5 +88,5 @@ export function CubieMesh({
         </mesh>
       ) : null}
     </group>
-  )
+  );
 }

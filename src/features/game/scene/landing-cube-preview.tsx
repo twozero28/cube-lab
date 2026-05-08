@@ -1,9 +1,9 @@
-import {Canvas, useFrame} from "@react-three/fiber";
-import {useMemo, useRef, useState} from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-import {applyMove, createSolvedCube, getCubieDimension, getWorldPosition} from "../engine/cube";
-import type {CubeState, CubieState, Face, Move} from "../engine/types";
+import { applyMove, createSolvedCube, getCubieDimension, getWorldPosition } from "../engine/cube";
+import type { CubeState, CubieState, Face, Move } from "../engine/types";
 
 const PREVIEW_SEQUENCE: Move[] = [
   { axis: "y", layer: 1, direction: 1 },

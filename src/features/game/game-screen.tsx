@@ -1,11 +1,11 @@
-import {Box} from "lucide-react";
+import { Box } from "lucide-react";
 
-import {CubeScene} from "./scene/cube-scene";
-import {useGameStore} from "./store/game-store";
-import {formatElapsed} from "./ui/format";
-import {GameHud} from "./ui/hud";
-import {useGameTimer} from "./ui/game-hooks";
-import {ResultDialog} from "./ui/result-dialog";
+import { CubeScene } from "./scene/cube-scene";
+import { useGameStore } from "./store/game-store";
+import { formatElapsed } from "./ui/format";
+import { GameHud } from "./ui/hud";
+import { useGameTimer } from "./ui/game-hooks";
+import { ResultDialog } from "./ui/result-dialog";
 
 export function GameScreen() {
   const phase = useGameStore((state) => state.phase);

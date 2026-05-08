@@ -24,8 +24,9 @@ Cube Lab is a browser-based 3D cube puzzle game built with TanStack Start, React
 ## Getting Started
 
 ```bash
-bun install
-bun --bun run dev
+mise install
+pnpm install
+pnpm run dev
 ```
 
 The dev server runs on `http://localhost:3000`.
@@ -33,12 +34,12 @@ The dev server runs on `http://localhost:3000`.
 ## Available Scripts
 
 ```bash
-bun --bun run dev
-bun --bun run build
-bun --bun run preview
-bun --bun run test
-bun --bun run format
-bun --bun run format:check
+pnpm run dev
+pnpm run build
+pnpm run preview
+pnpm run test
+pnpm run format
+pnpm run format:check
 ```
 
 ## Project Structure
