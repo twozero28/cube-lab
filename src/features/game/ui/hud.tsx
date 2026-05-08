@@ -36,14 +36,7 @@ export function GameHud() {
           <ArrowLeft className="size-5 text-[var(--text-secondary)]" />
         </Link>
 
-        <div className="soft-button flex items-center gap-2 px-3 py-2">
-          <span className="cube-glyph !grid-cols-2 !gap-[0.06rem] !p-[0.2rem]">
-            {["var(--cube-blue)", "var(--cube-yellow)", "var(--cube-red)", "var(--cube-green)"].map(
-              (color) => (
-                <span key={color} style={{ background: color }} />
-              ),
-            )}
-          </span>
+        <div className="soft-button flex items-center px-4 py-2">
           <select
             aria-label="Cube size"
             value={size}

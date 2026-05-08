@@ -1,8 +1,8 @@
-# Design System: Cube Desk
+# Design System: Cube Timer
 
 ## 1. Creative North Star
 
-Cube Desk is a warm, tactile puzzle companion. The interface should feel like a well-made cube sitting on a quiet desk: physical, focused, and easy to return to for one more solve.
+Cube Timer is a warm, tactile puzzle timer. The interface should feel like a well-made cube sitting on a quiet desk: physical, focused, and easy to return to for one more solve.
 
 The design language combines a desk-toy mood with a lightweight speedcubing timer. The cube is the visual hero. The interface supports it with calm typography, touch-friendly controls, and soft material depth.
 
@@ -65,8 +65,9 @@ Result review should feel celebratory but quiet. Use cube-color tile motifs and 
 
 Use simple, product-like language.
 
-- Product name: Cube Desk
-- Tagline: Your desk. Your cube.
+- Product name: Cube Timer
+- Tagline: Time your cube.
+- Landing copy: Start a scramble, solve the cube, and track the run without extra noise.
 - Primary CTA: Start solving
 - Play controls: Scramble, Undo, Reset, Done
 - Result: Solved, Try again, Back to home

@@ -16,7 +16,15 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Cube Lab",
+        title: "Cube Timer",
+      },
+      {
+        property: "og:site_name",
+        content: "Cube Timer",
+      },
+      {
+        property: "og:type",
+        content: "website",
       },
     ],
     links: [

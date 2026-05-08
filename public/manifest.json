@@ -1,6 +1,6 @@
 {
-  "short_name": "Cube Lab",
-  "name": "Cube Lab",
+  "short_name": "Cube Timer",
+  "name": "Cube Timer",
   "icons": [
     {
       "src": "cube-lab-cube-192.png",
@@ -23,8 +23,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://cubetimer.sitos.uk/",
   "display": "standalone",
-  "theme_color": "#0c0c21",
-  "background_color": "#0c0c21"
+  "theme_color": "#f7f2e8",
+  "background_color": "#f7f2e8"
 }

@@ -1,6 +1,7 @@
 {
   "name": "cubegame",
   "private": true,
+  "homepage": "https://cubetimer.sitos.uk",
   "type": "module",
   "engines": {
     "node": ">=24 <25",

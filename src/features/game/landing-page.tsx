@@ -57,14 +57,13 @@ export function LandingPage() {
         <div className="home-layout">
           <section className="home-copy text-center md:text-left">
             <h1 className="text-[2.75rem] font-black leading-none tracking-[-0.055em] text-[var(--text-primary)] md:text-6xl lg:text-7xl">
-              Cube Desk
+              Cube Timer
             </h1>
             <p className="mt-2 text-lg font-semibold text-[var(--sage-dark)] md:text-2xl">
-              Your desk. Your cube.
+              Time your cube.
             </p>
             <p className="mx-auto mt-4 hidden max-w-[32rem] text-base leading-7 text-[var(--text-secondary)] md:mx-0 md:block">
-              A quiet cube puzzle timer for short practice sessions, warm desk breaks, and one more
-              solve before you close the browser.
+              Start a scramble, solve the cube, and track the run without extra noise.
             </p>
           </section>
 

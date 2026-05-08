@@ -1,6 +1,3 @@
-import { Grip, MoreHorizontal } from "lucide-react";
-
-import { moveToLabel } from "./engine/cube";
 import { CubeScene } from "./scene/cube-scene";
 import { useGameStore } from "./store/game-store";
 import { formatElapsed } from "./ui/format";
@@ -14,7 +11,6 @@ export function GameScreen() {
   const moveCount = useGameStore((state) => state.moveCount);
   const activeMove = useGameStore((state) => state.activeMove);
   const previewMove = useGameStore((state) => state.previewMove);
-  const scrambleMoves = useGameStore((state) => state.scrambleMoves);
   const size = useGameStore((state) => state.size);
 
   useGameTimer();
@@ -26,11 +22,6 @@ export function GameScreen() {
       : phase === "idle"
         ? "Scramble to begin"
         : "Tap and hold to inspect";
-  const scrambleLabel =
-    scrambleMoves.length > 0
-      ? scrambleMoves.map(moveToLabel).join(" ")
-      : "Scramble will appear here after you start.";
-
   return (
     <main className="app-canvas">
       <section className="phone-shell play-shell safe-top safe-bottom flex flex-col px-6 md:px-10 lg:px-12">
@@ -38,7 +29,6 @@ export function GameScreen() {
 
         <section className="play-layout">
           <div className="play-panel relative z-10 flex flex-col items-center md:items-start">
-            <Grip className="mb-2 size-6 text-[var(--text-muted)] md:mb-4" />
             <div className="flex w-full items-end justify-between gap-4 md:block">
               <div>
                 <h1 className="timer-number text-[clamp(2.65rem,12vw,4.1rem)] font-black leading-none tracking-[-0.08em] text-[var(--text-primary)] md:text-[5.8rem] lg:text-[6.75rem]">
@@ -66,28 +56,10 @@ export function GameScreen() {
                 </p>
               </div>
             </div>
-
-            <div className="scramble-strip mt-5 hidden w-full items-center gap-3 p-4 md:flex">
-              <p className="min-w-0 flex-1 font-mono text-[0.95rem] leading-6 text-[var(--text-primary)]">
-                {scrambleLabel}
-              </p>
-              <span className="soft-button grid size-11 shrink-0 place-items-center">
-                <MoreHorizontal className="size-5 text-[var(--text-muted)]" />
-              </span>
-            </div>
           </div>
 
           <div className="play-stage-panel relative z-10">
             <CubeScene />
-          </div>
-
-          <div className="scramble-strip relative z-10 flex w-full items-center gap-3 p-3 md:hidden">
-            <p className="min-w-0 flex-1 font-mono text-[0.95rem] leading-6 text-[var(--text-primary)]">
-              {scrambleLabel}
-            </p>
-            <span className="soft-button grid size-10 shrink-0 place-items-center">
-              <MoreHorizontal className="size-5 text-[var(--text-muted)]" />
-            </span>
           </div>
         </section>
         <ResultDialog />
