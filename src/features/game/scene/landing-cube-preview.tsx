@@ -44,10 +44,10 @@ export function LandingCubePreview() {
           gl.setClearColor(0x000000, 0);
         }}
       >
-        <ambientLight intensity={1.35} />
-        <directionalLight position={[5, 7, 6]} intensity={2.15} color="#f4f2ff" />
-        <pointLight position={[-4, 3, 5]} intensity={1.45} color="#00eefc" />
-        <pointLight position={[4, -1, 4]} intensity={1.05} color="#ff51fa" />
+        <ambientLight intensity={1.55} />
+        <directionalLight position={[5, 7, 6]} intensity={2.25} color="#fff7e7" />
+        <pointLight position={[-4, 3, 5]} intensity={0.75} color="#d8b99b" />
+        <pointLight position={[4, -1, 4]} intensity={0.55} color="#8fa58b" />
         <ScrambleLoopCube />
       </Canvas>
     </div>
@@ -139,11 +139,11 @@ function PreviewCubie({ cubie }: { cubie: CubieState }) {
       <mesh castShadow receiveShadow>
         <boxGeometry args={[dimension, dimension, dimension]} />
         <meshStandardMaterial
-          color="#303652"
-          emissive="#0f1224"
-          emissiveIntensity={0.18}
-          metalness={0.2}
-          roughness={0.34}
+          color="#28241f"
+          emissive="#000000"
+          emissiveIntensity={0}
+          metalness={0.05}
+          roughness={0.42}
         />
       </mesh>
 
@@ -160,8 +160,8 @@ function PreviewCubie({ cubie }: { cubie: CubieState }) {
             <planeGeometry args={[dimension * 0.82, dimension * 0.82]} />
             <meshStandardMaterial
               color={color}
-              emissive={color}
-              emissiveIntensity={0.1}
+              emissive="#000000"
+              emissiveIntensity={0}
               metalness={0.04}
               roughness={0.18}
               side={THREE.DoubleSide}

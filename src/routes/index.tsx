@@ -5,12 +5,11 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Cube Lab",
+        title: "Cube Desk",
       },
       {
         name: "description",
-        content:
-          "Unified neon landing for Cube Lab with a floating central hero, protocol footer, and holographic navigation shell.",
+        content: "A warm desk toy companion for practicing cube puzzle solves in the browser.",
       },
     ],
   }),

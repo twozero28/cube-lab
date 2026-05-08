@@ -6,12 +6,12 @@ export const Route = createFileRoute("/play")({
   head: () => ({
     meta: [
       {
-        title: "Cube Lab - Play",
+        title: "Cube Desk - Play",
       },
       {
         name: "description",
         content:
-          "3D Cube Puzzle Stage with a fixed neon HUD, live telemetry, and a bottom command shell built from the Stitch design.",
+          "A focused cube puzzle timer with touch controls, scramble actions, and solve review.",
       },
     ],
   }),

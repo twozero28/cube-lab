@@ -46,7 +46,7 @@ export function CubeScene() {
     );
   }, [activeMove?.move, cube.cubies, previewMove]);
 
-  const cubeScale = size === 2 ? 1.18 : 0.98;
+  const cubeScale = size === 2 ? 1.42 : 1.2;
 
   useEffect(() => {
     if (!activeMove) {
@@ -115,24 +115,24 @@ export function CubeScene() {
         shadows
         style={{ width: "100%", height: "100%" }}
         camera={{
-          position: size === 2 ? [4.3, 3.5, 5.3] : [4.9, 4.0, 6.1],
-          fov: size === 2 ? 31 : 35,
+          position: size === 2 ? [4.35, 3.55, 5.4] : [4.72, 3.85, 5.85],
+          fov: size === 2 ? 30 : 32,
         }}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={["#090d18"]} />
-        <fog attach="fog" args={["#090d18", 10, 18]} />
-        <ambientLight intensity={1.15} />
+        <color attach="background" args={["#f7f2e8"]} />
+        <fog attach="fog" args={["#f7f2e8", 12, 20]} />
+        <ambientLight intensity={1.45} />
         <directionalLight
           castShadow
           position={[4, 7, 5]}
-          intensity={1.8}
+          intensity={2.05}
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
         />
-        <pointLight position={[-6, -3, -4]} intensity={1.1} color="#7dd3fc" />
+        <pointLight position={[-5, 2, 4]} intensity={0.75} color="#d8b99b" />
         <Suspense fallback={null}>
-          <Environment preset="city" />
+          <Environment preset="apartment" />
         </Suspense>
         <Float speed={1.5} rotationIntensity={0.08} floatIntensity={0.18}>
           <group rotation={[-0.28, 0.68, 0]} scale={cubeScale}>
@@ -162,7 +162,7 @@ export function CubeScene() {
         </Float>
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3.35, 0]} receiveShadow>
           <circleGeometry args={[5.1, 64]} />
-          <meshStandardMaterial color="#0f1728" transparent opacity={0.58} />
+          <meshStandardMaterial color="#d8b99b" transparent opacity={0.24} />
         </mesh>
         <CameraRig
           enabled={!pointerSessionRef.current && phase !== "animating" && phase !== "scrambling"}

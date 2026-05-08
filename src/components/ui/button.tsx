@@ -5,17 +5,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "#/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[0.8rem] text-sm font-bold transition-all disabled:pointer-events-none disabled:opacity-45 outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface)]",
   {
     variants: {
       variant: {
         default:
-          "bg-[var(--glass-gradient)] text-[var(--primary-foreground)] shadow-[0_16px_34px_rgba(0,238,252,0.2)] hover:-translate-y-0.5 hover:brightness-105",
+          "bg-[linear-gradient(180deg,#77956e,var(--sage))] text-[var(--primary-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_10px_18px_rgba(78,104,72,0.24)] hover:-translate-y-0.5 hover:brightness-105",
         secondary:
-          "bg-[rgba(169,0,169,0.2)] text-[var(--secondary-foreground)] shadow-[inset_0_0_0_1px_var(--outline-variant)] hover:bg-[rgba(169,0,169,0.34)]",
-        ghost: "text-[var(--text-primary)] hover:bg-white/10",
+          "bg-[var(--surface-raised)] text-[var(--secondary-foreground)] shadow-[var(--shadow-inset),var(--shadow-short)] hover:-translate-y-0.5",
+        ghost: "text-[var(--text-primary)] hover:bg-[rgba(104,84,58,0.08)]",
         outline:
-          "bg-transparent text-[var(--text-primary)] shadow-[inset_0_0_0_1px_var(--outline-variant)] hover:bg-[var(--surface-variant)]",
+          "bg-[var(--surface-paper)] text-[var(--text-primary)] shadow-[var(--shadow-inset)] hover:bg-[var(--surface-raised)]",
       },
       size: {
         default: "min-h-12 px-5 py-3",

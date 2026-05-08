@@ -32,6 +32,8 @@ interface GameStoreState {
   elapsedMs: number;
   runStartedAt: number | null;
   history: Move[];
+  scrambleMoves: Move[];
+  sessionResults: CubeRecord[];
   activeMove: ActiveMove | null;
   moveQueue: ActiveMove[];
   settings: SettingsState;
@@ -74,6 +76,8 @@ function createInitialState(size: CubeSize) {
     elapsedMs: 0,
     runStartedAt: null,
     history: [] as Move[],
+    scrambleMoves: [] as Move[],
+    sessionResults: [] as CubeRecord[],
     activeMove: null as ActiveMove | null,
     moveQueue: [] as ActiveMove[],
     settings: defaultSettings,
@@ -98,6 +102,7 @@ export const useGameStore = create<GameStoreState>()(
           elapsedMs: 0,
           runStartedAt: null,
           history: [],
+          scrambleMoves: [],
           activeMove: null,
           moveQueue: [],
           previewMove: null,
@@ -140,6 +145,7 @@ export const useGameStore = create<GameStoreState>()(
           elapsedMs: 0,
           runStartedAt: null,
           history: [],
+          scrambleMoves: scramble.map((entry) => entry.move),
           activeMove: first,
           moveQueue: rest,
           resultOpen: false,
@@ -154,6 +160,7 @@ export const useGameStore = create<GameStoreState>()(
           elapsedMs: 0,
           runStartedAt: null,
           history: [],
+          scrambleMoves: [],
           activeMove: null,
           moveQueue: [],
           previewMove: null,
@@ -228,6 +235,10 @@ export const useGameStore = create<GameStoreState>()(
             phase: "solved",
             runStartedAt: null,
             resultOpen: true,
+            sessionResults: [
+              { bestTimeMs: state.elapsedMs, bestMoves: moveCount },
+              ...state.sessionResults,
+            ].slice(0, 5),
             records: {
               ...state.records,
               [state.size]: nextRecord,
@@ -286,6 +297,7 @@ export const useGameStore = create<GameStoreState>()(
         elapsedMs: 0,
         runStartedAt: null,
         history: [],
+        scrambleMoves: [],
         activeMove: null,
         moveQueue: [],
         settingsOpen: false,

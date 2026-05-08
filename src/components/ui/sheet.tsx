@@ -16,7 +16,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn("fixed inset-0 z-50 bg-[rgba(7,10,24,0.6)] backdrop-blur-sm", className)}
+    className={cn("fixed inset-0 z-50 bg-[rgba(43,34,24,0.28)] backdrop-blur-sm", className)}
     {...props}
   />
 ));
@@ -31,14 +31,14 @@ export const SheetContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 rounded-t-[2rem] bg-[rgba(29,29,57,0.9)] p-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_0_0_1px_var(--outline-variant),0_-22px_56px_rgba(4,6,20,0.45)] backdrop-blur-xl",
+        "fixed inset-x-0 bottom-0 z-50 rounded-t-[1.45rem] bg-[var(--surface-paper)] p-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] text-[var(--text-primary)] shadow-[var(--shadow-inset),0_-22px_56px_rgba(82,64,43,0.18)] md:left-1/2 md:w-[min(27rem,92vw)] md:-translate-x-1/2",
         className,
       )}
       {...props}
     >
-      <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-[var(--panel-line-strong)]" />
+      <div className="mx-auto mb-4 h-1.5 w-14 rounded-full bg-[var(--surface-sunken)]" />
       {children}
-      <DialogPrimitive.Close className="absolute right-5 top-5 rounded-full bg-[rgba(35,35,65,0.72)] p-2 text-[var(--text-secondary)] shadow-[inset_0_0_0_1px_var(--outline-variant)] transition hover:bg-[var(--surface-variant-strong)] hover:text-[var(--text-primary)]">
+      <DialogPrimitive.Close className="soft-button absolute right-5 top-5 p-2 text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]">
         <X className="size-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -57,7 +57,7 @@ export const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-2xl font-semibold text-[var(--text-primary)]", className)}
+    className={cn("text-2xl font-extrabold text-[var(--text-primary)]", className)}
     {...props}
   />
 ));

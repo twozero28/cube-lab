@@ -15,7 +15,7 @@ export const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn("fixed inset-0 z-50 bg-[rgba(6,10,24,0.72)] backdrop-blur-sm", className)}
+    className={cn("fixed inset-0 z-50 bg-[rgba(43,34,24,0.32)] backdrop-blur-sm", className)}
     {...props}
   />
 ));
@@ -30,13 +30,13 @@ export const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-1/2 top-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 rounded-[2rem] bg-[rgba(29,29,57,0.92)] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_0_0_1px_var(--outline-variant),0_24px_80px_rgba(4,6,20,0.45)] backdrop-blur-xl",
+        "fixed left-1/2 top-1/2 z-50 w-[min(92vw,25rem)] -translate-x-1/2 -translate-y-1/2 rounded-[1.25rem] bg-[var(--surface-paper)] p-5 text-[var(--text-primary)] shadow-[var(--shadow-inset),0_24px_70px_rgba(82,64,43,0.28)]",
         className,
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-5 top-5 rounded-full bg-[rgba(35,35,65,0.72)] p-2 text-[var(--text-secondary)] shadow-[inset_0_0_0_1px_var(--outline-variant)] transition hover:bg-[var(--surface-variant-strong)] hover:text-[var(--text-primary)]">
+      <DialogPrimitive.Close className="soft-button absolute right-4 top-4 p-2 text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]">
         <X className="size-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -64,7 +64,7 @@ export const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-2xl font-semibold text-[var(--text-primary)]", className)}
+    className={cn("text-2xl font-extrabold text-[var(--text-primary)]", className)}
     {...props}
   />
 ));

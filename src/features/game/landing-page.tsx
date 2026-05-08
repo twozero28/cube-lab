@@ -1,99 +1,157 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Github, Grid2x2, Sparkles } from "lucide-react";
+import { Box, Github, Settings, Target } from "lucide-react";
 
 import { Button } from "#/components/ui/button";
+import { useGameStore } from "./store/game-store";
+import { formatElapsed } from "./ui/format";
 
 const LandingCubePreview = lazy(async () => {
   const module = await import("./scene/landing-cube-preview");
   return { default: module.LandingCubePreview };
 });
 
+const cubeTiles = [
+  "var(--cube-blue)",
+  "var(--cube-red)",
+  "var(--cube-yellow)",
+  "var(--cube-green)",
+  "var(--cube-orange)",
+  "#fffaf1",
+  "var(--cube-blue)",
+  "var(--cube-yellow)",
+  "var(--cube-red)",
+];
+
 export function LandingPage() {
   const [mounted, setMounted] = useState(false);
+  const size = useGameStore((state) => state.size);
+  const records = useGameStore((state) => state.records);
+  const setSize = useGameStore((state) => state.setSize);
+
+  const bestTime = records[size].bestTimeMs;
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   return (
-    <main className="relative min-h-dvh overflow-x-hidden bg-slate-950 text-[var(--text-primary)]">
-      <header className="sticky top-0 z-50 flex items-center justify-between border-b border-cyan-400/20 bg-slate-950/80 px-6 py-4 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
-        <div className="flex items-center gap-3">
-          <Grid2x2 className="size-5 text-cyan-400" />
-          <span className="font-[var(--font-display)] text-xl font-bold uppercase tracking-[0.2em] text-cyan-400 [text-shadow:0_0_8px_rgba(0,240,255,0.6)]">
-            Neon_Cube_Lab
-          </span>
-        </div>
+    <main className="app-canvas">
+      <section className="phone-shell safe-top safe-bottom px-6 md:px-10 lg:px-12">
+        <header className="relative z-10 flex items-center justify-between">
+          <div className="soft-button grid size-12 place-items-center">
+            <Box className="size-5 text-[var(--sage-dark)]" />
+          </div>
 
-        <Button
-          asChild
-          variant="ghost"
-          size="icon"
-          className="rounded-full text-slate-400 hover:bg-cyan-500/10 hover:text-cyan-400 hover:shadow-[0_0_20px_rgba(0,240,255,0.18)]"
-        >
           <a
             href="https://github.com/twozero28/cube-lab"
             target="_blank"
             rel="noreferrer"
             aria-label="Open GitHub repository"
+            className="soft-button grid size-12 place-items-center text-[var(--text-secondary)]"
           >
             <Github className="size-5" />
           </a>
-        </Button>
-      </header>
+        </header>
 
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -left-[10%] -top-[10%] h-[40%] w-[40%] rounded-full bg-cyan-500/10 blur-[100px]" />
-        <div className="absolute -bottom-[10%] -right-[10%] h-[40%] w-[40%] rounded-full bg-fuchsia-500/10 blur-[100px]" />
-        <div className="scanline-overlay absolute inset-0" />
-      </div>
+        <div className="home-layout">
+          <section className="home-copy text-center md:text-left">
+            <h1 className="text-[2.75rem] font-black leading-none tracking-[-0.055em] text-[var(--text-primary)] md:text-6xl lg:text-7xl">
+              Cube Desk
+            </h1>
+            <p className="mt-2 text-lg font-semibold text-[var(--sage-dark)] md:text-2xl">
+              Your desk. Your cube.
+            </p>
+            <p className="mx-auto mt-4 hidden max-w-[32rem] text-base leading-7 text-[var(--text-secondary)] md:mx-0 md:block">
+              A quiet cube puzzle timer for short practice sessions, warm desk breaks, and one more
+              solve before you close the browser.
+            </p>
+          </section>
 
-      <section className="relative z-10 flex min-h-[calc(100dvh-9rem)] flex-col items-center justify-center px-6 pb-36 pt-10 text-center">
-        <div className="relative mb-10 h-64 w-64 md:h-80 md:w-80">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500/10 via-transparent to-fuchsia-500/10 blur-[80px]" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            {mounted ? (
-              <Suspense fallback={<StaticCubeFallback />}>
-                <LandingCubePreview />
-              </Suspense>
-            ) : (
-              <StaticCubeFallback />
-            )}
-          </div>
-        </div>
+          <section className="home-visual">
+            <div className="desk-plant" aria-hidden="true" />
+            <div className="desk-cup" aria-hidden="true" />
+            <div className="home-cube-frame">
+              {mounted ? (
+                <Suspense fallback={<StaticCubeFallback />}>
+                  <LandingCubePreview />
+                </Suspense>
+              ) : (
+                <StaticCubeFallback />
+              )}
+            </div>
+          </section>
 
-        <div className="mx-auto max-w-2xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-md border border-emerald-500/30 bg-slate-900/60 px-3 py-1.5 backdrop-blur-md">
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            <span className="font-[var(--font-display)] text-[10px] font-bold uppercase tracking-widest text-emerald-400">
-              System_Ready
-            </span>
-          </div>
-
-          <h1 className="font-[var(--font-display)] text-4xl font-black leading-tight tracking-tight text-white md:text-6xl">
-            NEON_
-            <span className="text-cyan-400 [text-shadow:0_0_12px_rgba(0,240,255,0.6)]">CUBE</span>
-            _LAB
-          </h1>
-
-          <p className="mx-auto max-w-md font-[var(--font-display)] text-xs uppercase tracking-[0.15em] text-slate-400 md:text-sm">
-            Decipher the <span className="text-cyan-400">Kinetic Chronosphere</span>.
-            <br />
-            Solve the cube. Save the sequence.
-          </p>
-
-          <div className="pt-8">
+          <div className="home-actions">
             <Button
               asChild
-              variant="outline"
-              className="group relative min-h-14 rounded-md border-cyan-400/40 bg-cyan-500/10 px-10 py-4 font-[var(--font-display)] text-sm font-bold uppercase tracking-[0.2em] text-cyan-400 hover:bg-cyan-500/20 hover:shadow-[0_0_30px_rgba(0,240,255,0.3)]"
+              size="lg"
+              className="relative z-10 min-h-16 w-full text-xl md:w-auto md:px-8"
             >
               <Link to="/play">
-                Initiate protocol
-                <Sparkles className="size-4 transition-transform group-hover:scale-110" />
+                <Box className="size-6" />
+                Start solving
               </Link>
             </Button>
+
+            <div className="relative z-10 mt-5 grid grid-cols-3 gap-4 md:max-w-[30rem]">
+              <ModeTile
+                label="3x3"
+                active={size === 3}
+                onClick={() => setSize(3)}
+                colors={cubeTiles}
+              />
+              <ModeTile
+                label="2x2"
+                active={size === 2}
+                onClick={() => setSize(2)}
+                colors={cubeTiles.slice().reverse()}
+              />
+              <ModeTile
+                label="Practice"
+                active={false}
+                onClick={() => setSize(size)}
+                icon={<Target className="size-8 text-[var(--gold)]" />}
+              />
+            </div>
+
+            <section className="paper-card relative z-10 mt-5 p-5 md:max-w-[30rem]">
+              <div className="flex items-end justify-between gap-4">
+                <div className="text-left">
+                  <p className="text-sm font-bold text-[var(--sage-dark)]">
+                    Best time ({size}x{size})
+                  </p>
+                  <p
+                    className={
+                      bestTime === null
+                        ? "mt-2 text-3xl font-black leading-none tracking-[-0.03em]"
+                        : "timer-number mt-2 text-4xl font-black leading-none"
+                    }
+                  >
+                    {bestTime === null ? "No record" : formatElapsed(bestTime)}
+                  </p>
+                  <p className="mt-2 text-sm text-[var(--text-muted)]">
+                    {bestTime === null
+                      ? "Start a solve to set your first record."
+                      : "Personal best"}
+                  </p>
+                </div>
+                <div className="flex h-16 items-end gap-1 border-l border-[var(--border)] pl-5">
+                  {[0.38, 0.56, 0.74, 0.92].map((height) => (
+                    <span
+                      key={height}
+                      className="w-2.5 rounded-t-sm bg-[var(--sage)] opacity-70"
+                      style={{ height: `${height * 3.2}rem` }}
+                      aria-hidden="true"
+                    />
+                  ))}
+                  <Settings
+                    className="ml-2 size-5 self-center text-[var(--gold)]"
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </section>
@@ -101,23 +159,45 @@ export function LandingPage() {
   );
 }
 
-function StaticCubeFallback() {
-  const tiles = [
-    "#3f8cff",
-    "#f5f7fb",
-    "#7de7c2",
-    "#f6d365",
-    "#ff5d8f",
-    "#ff8a38",
-    "#32c98f",
-    "#3f8cff",
-    "#f6d365",
-  ];
+function ModeTile({
+  label,
+  active,
+  onClick,
+  colors,
+  icon,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  colors?: string[];
+  icon?: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`mode-tile ${active ? "is-active" : ""}`}
+      aria-pressed={active}
+    >
+      {colors ? (
+        <span className="cube-glyph" aria-hidden="true">
+          {colors.map((color, index) => (
+            <span key={`${color}-${index}`} style={{ background: color }} />
+          ))}
+        </span>
+      ) : (
+        icon
+      )}
+      <span className="text-lg font-black">{label}</span>
+    </button>
+  );
+}
 
+function StaticCubeFallback() {
   return (
     <div className="landing-cube-fallback" aria-hidden="true">
       <div className="landing-cube-fallback-grid">
-        {tiles.map((color, index) => (
+        {cubeTiles.map((color, index) => (
           <span
             key={`${color}-${index}`}
             className="landing-cube-fallback-tile"

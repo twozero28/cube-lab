@@ -24,12 +24,12 @@ const VECTOR_TO_FACE = new Map<string, Face>(
 );
 
 export const FACE_COLORS: Record<Face, string> = {
-  U: "#f5f7fb",
-  D: "#f6d365",
-  L: "#3f8cff",
-  R: "#ff6d38",
-  F: "#32c98f",
-  B: "#ff5d8f",
+  U: "#fffaf1",
+  D: "#f4c944",
+  L: "#1c86b9",
+  R: "#e9822a",
+  F: "#4c9b49",
+  B: "#e34f35",
 };
 
 export function createSolvedCube(size: CubeSize): CubeState {

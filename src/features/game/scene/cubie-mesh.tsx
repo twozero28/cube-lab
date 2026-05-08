@@ -44,9 +44,9 @@ export function CubieMesh({
       <mesh castShadow receiveShadow>
         <boxGeometry args={[dimension, dimension, dimension]} />
         <meshStandardMaterial
-          color={highlighted ? "#1a2338" : "#111827"}
-          metalness={0.15}
-          roughness={0.48}
+          color={highlighted ? "#3a332b" : "#24211d"}
+          metalness={0.06}
+          roughness={0.5}
         />
       </mesh>
 
@@ -72,10 +72,10 @@ export function CubieMesh({
             <planeGeometry args={[dimension * 0.82, dimension * 0.82]} />
             <meshStandardMaterial
               color={color}
-              emissive={hoveredFace === face ? color : "#000000"}
-              emissiveIntensity={hoveredFace === face ? 0.35 : 0}
+              emissive="#000000"
+              emissiveIntensity={0}
               metalness={0.05}
-              roughness={0.28}
+              roughness={hoveredFace === face ? 0.2 : 0.32}
             />
           </mesh>
         );
@@ -84,7 +84,7 @@ export function CubieMesh({
       {highlighted ? (
         <mesh scale={1.08}>
           <boxGeometry args={[dimension, dimension, dimension]} />
-          <meshBasicMaterial color="#9ad2ff" wireframe opacity={0.45} transparent />
+          <meshBasicMaterial color="#68845f" wireframe opacity={0.3} transparent />
         </mesh>
       ) : null}
     </group>
