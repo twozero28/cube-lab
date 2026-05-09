@@ -74,6 +74,7 @@ export function CameraRig({ enabled }: { enabled: boolean }) {
       .copy(target)
       .add(new THREE.Vector3(nextFrame.offset.x, nextFrame.offset.y, nextFrame.offset.z));
     camera.lookAt(target);
+    camera.updateMatrixWorld();
   });
 
   return (

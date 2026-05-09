@@ -2,8 +2,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-import { applyMove, createSolvedCube, getCubieDimension, getWorldPosition } from "../engine/cube";
-import type { CubeState, CubieState, Face, Move } from "../engine/types";
+import { CubieMesh } from "./cubie-mesh";
+import { applyMove, createSolvedCube } from "../engine/cube";
+import type { CubeState, Move } from "../engine/types";
 
 const PREVIEW_SEQUENCE: Move[] = [
   { axis: "y", layer: 1, direction: 1 },
@@ -15,21 +16,6 @@ const PREVIEW_SEQUENCE: Move[] = [
   { axis: "y", layer: 1, direction: -1 },
   { axis: "x", layer: -1, direction: 1 },
 ];
-
-const FACE_TRANSFORMS: Record<
-  Face,
-  {
-    position: [number, number, number];
-    rotation: [number, number, number];
-  }
-> = {
-  F: { position: [0, 0, 0.501], rotation: [0, 0, 0] },
-  B: { position: [0, 0, -0.501], rotation: [0, Math.PI, 0] },
-  U: { position: [0, 0.501, 0], rotation: [-Math.PI / 2, 0, 0] },
-  D: { position: [0, -0.501, 0], rotation: [Math.PI / 2, 0, 0] },
-  R: { position: [0.501, 0, 0], rotation: [0, Math.PI / 2, 0] },
-  L: { position: [-0.501, 0, 0], rotation: [0, -Math.PI / 2, 0] },
-};
 
 const MOVE_DURATION = 0.52;
 
@@ -114,7 +100,16 @@ function ScrambleLoopCube() {
           {cube.cubies
             .filter((cubie) => !animatedIds.has(cubie.id))
             .map((cubie) => (
-              <PreviewCubie key={cubie.id} cubie={cubie} />
+              <CubieMesh
+                key={cubie.id}
+                cubie={cubie}
+                size={3}
+                highlighted={false}
+                hoveredFace={null}
+                onFacePointerDown={() => undefined}
+                onFacePointerEnter={() => undefined}
+                onFacePointerLeave={() => undefined}
+              />
             ))}
         </group>
 
@@ -122,62 +117,19 @@ function ScrambleLoopCube() {
           {cube.cubies
             .filter((cubie) => animatedIds.has(cubie.id))
             .map((cubie) => (
-              <PreviewCubie key={cubie.id} cubie={cubie} />
+              <CubieMesh
+                key={cubie.id}
+                cubie={cubie}
+                size={3}
+                highlighted={false}
+                hoveredFace={null}
+                onFacePointerDown={() => undefined}
+                onFacePointerEnter={() => undefined}
+                onFacePointerLeave={() => undefined}
+              />
             ))}
         </group>
       </group>
     </group>
   );
-}
-
-function PreviewCubie({ cubie }: { cubie: CubieState }) {
-  const dimension = getCubieDimension(3) * 0.9;
-  const [x, y, z] = getWorldPosition(cubie.position, 3);
-
-  return (
-    <group position={[x, y, z]}>
-      <mesh castShadow receiveShadow>
-        <boxGeometry args={[dimension, dimension, dimension]} />
-        <meshStandardMaterial
-          color="#28241f"
-          emissive="#000000"
-          emissiveIntensity={0}
-          metalness={0.05}
-          roughness={0.42}
-        />
-      </mesh>
-
-      {Object.entries(cubie.stickers).map(([face, color]) => {
-        if (!color) {
-          return null;
-        }
-
-        const transform = FACE_TRANSFORMS[face as Face];
-        const facePosition = scalePosition(transform.position, dimension);
-
-        return (
-          <mesh key={`${cubie.id}-${face}`} position={facePosition} rotation={transform.rotation}>
-            <planeGeometry args={[dimension * 0.82, dimension * 0.82]} />
-            <meshStandardMaterial
-              color={color}
-              emissive="#000000"
-              emissiveIntensity={0}
-              metalness={0.04}
-              roughness={0.18}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-        );
-      })}
-    </group>
-  );
-}
-
-function scalePosition(position: [number, number, number], dimension: number) {
-  const offset = dimension / 2 + 0.008;
-  return [
-    Math.sign(position[0]) * offset,
-    Math.sign(position[1]) * offset,
-    Math.sign(position[2]) * offset,
-  ] as const;
 }

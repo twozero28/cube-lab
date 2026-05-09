@@ -137,8 +137,8 @@ export function CubeScene() {
         <Suspense fallback={null}>
           <Environment preset="apartment" />
         </Suspense>
-        <Float speed={1.5} rotationIntensity={0.08} floatIntensity={0.18}>
-          <group rotation={[-0.28, 0.68, 0]} scale={cubeScale}>
+        <Float speed={1.5} rotationIntensity={0} floatIntensity={0.1}>
+          <group scale={cubeScale}>
             <AnimatedCube
               cubies={cube.cubies}
               size={size}
