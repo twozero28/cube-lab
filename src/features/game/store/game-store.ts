@@ -111,7 +111,13 @@ export const useGameStore = create<GameStoreState>()(
       queueMove: (move, source = "player") => {
         const state = get();
 
-        if (state.phase === "scrambling" && source === "player") {
+        if (
+          source === "player" &&
+          (state.phase === "idle" ||
+            state.phase === "scrambling" ||
+            state.phase === "paused" ||
+            state.phase === "solved")
+        ) {
           return;
         }
 

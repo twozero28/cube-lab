@@ -30,6 +30,20 @@ export interface Move {
   direction: TurnDirection;
 }
 
+export type ViewFaceCommand = "top" | "bottom" | "left" | "right" | "front" | "back";
+export type CameraNudgeCommand = "up" | "down" | "left" | "right";
+
+export interface KeyboardTurnCommand {
+  face: ViewFaceCommand;
+  clockwise: boolean;
+}
+
+export interface CameraBasis {
+  right: Vec3;
+  up: Vec3;
+  front: Vec3;
+}
+
 export interface CubeRecord {
   bestTimeMs: number | null;
   bestMoves: number | null;

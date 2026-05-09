@@ -190,12 +190,12 @@ export function getCoordinates(size: CubeSize): number[] {
 }
 
 export function getWorldPosition(position: Vec3, size: CubeSize) {
-  const spacing = size === 2 ? 0.86 : 0.8;
+  const spacing = size === 2 ? 0.88 : 0.78;
   return [position.x * spacing, position.y * spacing, position.z * spacing] as const;
 }
 
 export function getCubieDimension(size: CubeSize) {
-  return size === 2 ? 0.78 : 0.68;
+  return size === 2 ? 0.82 : 0.72;
 }
 
 export function rotateVector<T extends Vec3>(vector: T, axis: Axis, direction: TurnDirection): T {

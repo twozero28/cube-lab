@@ -1,4 +1,5 @@
 import type { ThreeEvent } from "@react-three/fiber";
+import { RoundedBox } from "@react-three/drei";
 
 import { getCubieDimension, getWorldPosition } from "../engine/cube";
 
@@ -11,12 +12,12 @@ const FACE_TRANSFORMS: Record<
     rotation: [number, number, number];
   }
 > = {
-  F: { position: [0, 0, 0.501], rotation: [0, 0, 0] },
-  B: { position: [0, 0, -0.501], rotation: [0, Math.PI, 0] },
-  U: { position: [0, 0.501, 0], rotation: [-Math.PI / 2, 0, 0] },
-  D: { position: [0, -0.501, 0], rotation: [Math.PI / 2, 0, 0] },
-  R: { position: [0.501, 0, 0], rotation: [0, Math.PI / 2, 0] },
-  L: { position: [-0.501, 0, 0], rotation: [0, -Math.PI / 2, 0] },
+  F: { position: [0, 0, 1], rotation: [0, 0, 0] },
+  B: { position: [0, 0, -1], rotation: [0, Math.PI, 0] },
+  U: { position: [0, 1, 0], rotation: [-Math.PI / 2, 0, 0] },
+  D: { position: [0, -1, 0], rotation: [Math.PI / 2, 0, 0] },
+  R: { position: [1, 0, 0], rotation: [0, Math.PI / 2, 0] },
+  L: { position: [-1, 0, 0], rotation: [0, -Math.PI / 2, 0] },
 };
 
 export function CubieMesh({
@@ -38,17 +39,29 @@ export function CubieMesh({
 }) {
   const dimension = getCubieDimension(size);
   const position = getWorldPosition(cubie.position, size);
+  const bodyRadius = size === 2 ? 0.065 : 0.052;
+  const stickerDepth = size === 2 ? 0.024 : 0.02;
+  const stickerSize = dimension * 0.72;
+  const stickerOffset = dimension / 2 + stickerDepth * 0.52;
 
   return (
     <group position={position}>
-      <mesh castShadow receiveShadow>
-        <boxGeometry args={[dimension, dimension, dimension]} />
+      <RoundedBox
+        castShadow
+        receiveShadow
+        args={[dimension, dimension, dimension]}
+        radius={bodyRadius}
+        smoothness={4}
+        bevelSegments={4}
+        creaseAngle={0.45}
+      >
         <meshStandardMaterial
-          color={highlighted ? "#3a332b" : "#24211d"}
-          metalness={0.06}
-          roughness={0.5}
+          color={highlighted ? "#2f2b26" : "#171513"}
+          metalness={0.04}
+          roughness={0.36}
+          envMapIntensity={0.45}
         />
-      </mesh>
+      </RoundedBox>
 
       {Object.entries(cubie.stickers).map(([face, color]) => {
         if (!color) {
@@ -58,10 +71,20 @@ export function CubieMesh({
         const transform = FACE_TRANSFORMS[face as Face];
 
         return (
-          <mesh
+          <RoundedBox
             key={`${cubie.id}-${face}`}
-            position={transform.position}
+            position={[
+              transform.position[0] * stickerOffset,
+              transform.position[1] * stickerOffset,
+              transform.position[2] * stickerOffset,
+            ]}
             rotation={transform.rotation}
+            args={[stickerSize, stickerSize, stickerDepth]}
+            radius={bodyRadius * 0.82}
+            smoothness={4}
+            bevelSegments={3}
+            creaseAngle={0.38}
+            castShadow
             onPointerDown={(event) => onFacePointerDown(event, face as Face)}
             onPointerEnter={(event) => {
               event.stopPropagation();
@@ -69,15 +92,15 @@ export function CubieMesh({
             }}
             onPointerLeave={onFacePointerLeave}
           >
-            <planeGeometry args={[dimension * 0.82, dimension * 0.82]} />
-            <meshStandardMaterial
+            <meshPhysicalMaterial
               color={color}
-              emissive="#000000"
-              emissiveIntensity={0}
-              metalness={0.05}
-              roughness={hoveredFace === face ? 0.2 : 0.32}
+              clearcoat={0.75}
+              clearcoatRoughness={hoveredFace === face ? 0.12 : 0.2}
+              metalness={0.02}
+              roughness={hoveredFace === face ? 0.18 : 0.26}
+              envMapIntensity={0.8}
             />
-          </mesh>
+          </RoundedBox>
         );
       })}
 

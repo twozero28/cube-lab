@@ -20,7 +20,7 @@ export function GameScreen() {
     : previewMove
       ? "Release to turn"
       : phase === "idle"
-        ? "Scramble to begin"
+        ? "Start to begin"
         : "Tap and hold to inspect";
   return (
     <main className="app-canvas">

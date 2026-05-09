@@ -1,14 +1,15 @@
-import { Suspense, useEffect, useMemo, useRef } from "react";
-import { Canvas, type ThreeEvent } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useThree, type ThreeEvent } from "@react-three/fiber";
 import { Environment, Float } from "@react-three/drei";
 import * as THREE from "three";
 
 import { CubieMesh } from "./cubie-mesh";
 import { CameraRig } from "./camera-rig";
+import { getKeyboardTurn } from "../engine/controls";
 import { deriveMoveIntent } from "../engine/gesture";
 import { useGameStore } from "../store/game-store";
 
-import type { CubieState, Face, Move } from "../engine/types";
+import type { CameraBasis, CubieState, CubeSize, Face, GamePhase, Move } from "../engine/types";
 
 interface PointerSession {
   cubieId: string;
@@ -31,6 +32,7 @@ export function CubeScene() {
   const setHoveredFace = useGameStore((state) => state.setHoveredFace);
 
   const pointerSessionRef = useRef<PointerSession | null>(null);
+  const [faceDragActive, setFaceDragActive] = useState(false);
 
   const highlightedIds = useMemo(() => {
     const move = activeMove?.move ?? previewMove;
@@ -95,6 +97,7 @@ export function CubeScene() {
       if (preview) queueMove(preview);
 
       pointerSessionRef.current = null;
+      setFaceDragActive(false);
       setPreviewMove(null);
     }
 
@@ -143,7 +146,7 @@ export function CubeScene() {
               highlightedCubieIds={highlightedIds}
               hoveredFace={hoveredFace}
               onFacePointerDown={(event, cubie, face) => {
-                if (phase === "scrambling" || phase === "animating" || phase === "solved") {
+                if (phase !== "interactive") {
                   return;
                 }
 
@@ -154,6 +157,7 @@ export function CubeScene() {
                   startX: event.clientX,
                   startY: event.clientY,
                 };
+                setFaceDragActive(true);
               }}
               onFacePointerEnter={(cubieId, face) => setHoveredFace({ cubieId, face })}
               onFacePointerLeave={() => setHoveredFace(null)}
@@ -164,8 +168,11 @@ export function CubeScene() {
           <circleGeometry args={[5.1, 64]} />
           <meshStandardMaterial color="#d8b99b" transparent opacity={0.24} />
         </mesh>
-        <CameraRig
-          enabled={!pointerSessionRef.current && phase !== "animating" && phase !== "scrambling"}
+        <CameraRig enabled={!faceDragActive && phase !== "animating" && phase !== "scrambling"} />
+        <KeyboardCubeControls
+          size={size}
+          phase={phase}
+          enabled={!faceDragActive && phase === "interactive"}
         />
       </Canvas>
     </div>
@@ -273,5 +280,85 @@ function AnimatedCube({
           ))}
       </group>
     </>
+  );
+}
+
+function KeyboardCubeControls({
+  size,
+  phase,
+  enabled,
+}: {
+  size: CubeSize;
+  phase: GamePhase;
+  enabled: boolean;
+}) {
+  const { camera } = useThree();
+  const queueMove = useGameStore((state) => state.queueMove);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (!enabled || event.repeat || isEditableTarget(event.target)) {
+        return;
+      }
+
+      const move = getKeyboardTurn(event, getCameraBasis(camera), size);
+
+      if (!move) {
+        return;
+      }
+
+      const currentPhase = useGameStore.getState().phase;
+
+      if (
+        currentPhase === "scrambling" ||
+        currentPhase === "animating" ||
+        currentPhase === "solved"
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      queueMove(move);
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [camera, enabled, phase, queueMove, size]);
+
+  return null;
+}
+
+function getCameraBasis(camera: THREE.Camera): CameraBasis {
+  const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+  const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1).normalize();
+  const front = camera.position.clone().normalize();
+
+  return {
+    right: toVec3(right),
+    up: toVec3(up),
+    front: toVec3(front),
+  };
+}
+
+function toVec3(vector: THREE.Vector3) {
+  return {
+    x: vector.x,
+    y: vector.y,
+    z: vector.z,
+  };
+}
+
+function isEditableTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  return (
+    target.isContentEditable ||
+    target.tagName === "INPUT" ||
+    target.tagName === "SELECT" ||
+    target.tagName === "TEXTAREA" ||
+    target.closest('[role="dialog"]') !== null
   );
 }

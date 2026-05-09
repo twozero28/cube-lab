@@ -462,8 +462,9 @@ a {
 
   .game-stage {
     position: relative;
-    height: min(50vh, 24rem);
-    min-height: 19rem;
+    height: min(56dvh, 27rem);
+    min-height: 21rem;
+    touch-action: none;
     filter: drop-shadow(0 24px 20px rgba(82, 64, 43, 0.16));
   }
 
@@ -535,6 +536,160 @@ a {
     cursor: not-allowed;
     opacity: 0.42;
     transform: none;
+  }
+
+  .settings-panel {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .setting-row,
+  .keyboard-help-panel,
+  .settings-home-link {
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--surface-paper) 88%, white);
+    box-shadow:
+      inset 0 0 0 1px rgba(84, 74, 61, 0.1),
+      0 6px 14px rgba(82, 64, 43, 0.07);
+  }
+
+  .setting-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: center;
+    min-height: 3.65rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .setting-row-copy p {
+    color: var(--text-primary);
+    font-size: 0.92rem;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .setting-row-copy span {
+    display: block;
+    margin-top: 0.18rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .setting-row-control {
+    min-width: min(11rem, 46vw);
+  }
+
+  .setting-row-control input[type="range"] {
+    display: block;
+  }
+
+  .setting-toggle {
+    min-width: 5.6rem;
+    border-radius: 0.62rem;
+    padding: 0.56rem 0.78rem;
+    background: var(--surface-raised);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 900;
+    box-shadow: var(--shadow-inset);
+  }
+
+  .setting-toggle.is-active {
+    background: var(--sage);
+    color: var(--primary-foreground);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 8px 14px rgba(78, 104, 72, 0.17);
+  }
+
+  .keyboard-help-panel {
+    padding: 0;
+  }
+
+  .keyboard-help-panel summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+    cursor: pointer;
+    list-style: none;
+    padding: 0.85rem;
+  }
+
+  .keyboard-help-panel summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .keyboard-help-panel summary span {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .keyboard-help-panel summary small {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .keyboard-help {
+    display: grid;
+    gap: 0.42rem;
+    padding: 0 0.85rem 0.85rem;
+  }
+
+  .keyboard-help-row {
+    display: grid;
+    grid-template-columns: minmax(5.4rem, 0.88fr) minmax(4.1rem, 0.7fr) minmax(0, 1.2fr);
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .keyboard-help kbd {
+    display: inline-grid;
+    min-width: 3rem;
+    min-height: 1.55rem;
+    place-items: center;
+    border-radius: 0.45rem;
+    background: color-mix(in srgb, var(--surface-raised) 88%, white);
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      inset 0 -1px 0 rgba(84, 74, 61, 0.12),
+      0 4px 8px rgba(82, 64, 43, 0.08);
+  }
+
+  .keyboard-help-label,
+  .keyboard-help-detail {
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .keyboard-help-label {
+    color: var(--text-secondary);
+  }
+
+  .keyboard-help-detail {
+    color: var(--text-muted);
+  }
+
+  .settings-home-link {
+    display: inline-flex;
+    min-height: 3.1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 900;
   }
 
   .result-dialog {

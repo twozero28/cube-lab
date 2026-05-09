@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
-import { ArrowLeft, CheckCircle2, RotateCcw, Settings, Shuffle, Undo2 } from "lucide-react";
+import { ArrowLeft, Play, RotateCcw, Settings, Undo2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "#/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -23,7 +22,6 @@ export function GameHud() {
   const undoMove = useGameStore((state) => state.undoMove);
   const resetCube = useGameStore((state) => state.resetCube);
   const setSettingsOpen = useGameStore((state) => state.setSettingsOpen);
-  const setResultOpen = useGameStore((state) => state.setResultOpen);
   const updateSettings = useGameStore((state) => state.updateSettings);
   const activeMove = useGameStore((state) => state.activeMove);
 
@@ -67,19 +65,11 @@ export function GameHud() {
           disabled={isBusy || moveCount === 0}
         />
         <BottomAction
-          label={phase === "idle" ? "Scramble" : "Reset"}
-          icon={
-            phase === "idle" ? <Shuffle className="size-6" /> : <RotateCcw className="size-6" />
-          }
+          label={phase === "idle" ? "Start" : "Reset"}
+          icon={phase === "idle" ? <Play className="size-6" /> : <RotateCcw className="size-6" />}
           onClick={phase === "idle" ? startScramble : resetCube}
           disabled={isBusy}
-        />
-        <BottomAction
-          label="Done"
-          icon={<CheckCircle2 className="size-6" />}
-          onClick={() => setResultOpen(true)}
-          disabled={phase !== "solved"}
-          primary
+          primary={phase === "idle"}
         />
       </nav>
 
@@ -87,11 +77,9 @@ export function GameHud() {
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Settings</SheetTitle>
-            <SheetDescription>
-              Keep touch feedback comfortable for short practice sessions.
-            </SheetDescription>
+            <SheetDescription>Tune the controls for quick practice.</SheetDescription>
           </SheetHeader>
-          <div className="mt-6 grid gap-4">
+          <div className="settings-panel mt-5">
             <SettingRow
               label="Drag threshold"
               value={`${settings.dragThreshold}px`}
@@ -112,38 +100,60 @@ export function GameHud() {
               label="Haptics"
               value={settings.hapticsEnabled ? "Enabled" : "Disabled"}
               control={
-                <Button
-                  variant={settings.hapticsEnabled ? "default" : "secondary"}
-                  size="sm"
+                <button
+                  type="button"
+                  aria-pressed={settings.hapticsEnabled}
                   onClick={() => updateSettings({ hapticsEnabled: !settings.hapticsEnabled })}
+                  className={`setting-toggle ${settings.hapticsEnabled ? "is-active" : ""}`}
                 >
                   {settings.hapticsEnabled ? "Enabled" : "Disabled"}
-                </Button>
+                </button>
               }
             />
             <SettingRow
               label="Sound"
               value={settings.soundEnabled ? "Enabled" : "Disabled"}
               control={
-                <Button
-                  variant={settings.soundEnabled ? "default" : "secondary"}
-                  size="sm"
+                <button
+                  type="button"
+                  aria-pressed={settings.soundEnabled}
                   onClick={() => updateSettings({ soundEnabled: !settings.soundEnabled })}
+                  className={`setting-toggle ${settings.soundEnabled ? "is-active" : ""}`}
                 >
                   {settings.soundEnabled ? "Enabled" : "Disabled"}
-                </Button>
+                </button>
               }
             />
-            <Link
-              to="/"
-              className="soft-button mt-2 inline-flex items-center justify-center px-4 py-3 text-sm font-extrabold text-[var(--text-secondary)]"
-            >
+            <details className="keyboard-help-panel" open>
+              <summary>
+                <span>Desktop keyboard controls</span>
+                <small>Current view faces</small>
+              </summary>
+              <div className="keyboard-help mt-3">
+                <KeyboardHelpRow label="Camera" keys="W/A/S/D" detail="rotate view" />
+                <KeyboardHelpRow label="Top / Bottom" keys="I / K" detail="visible faces" />
+                <KeyboardHelpRow label="Left / Right" keys="J / L" detail="visible faces" />
+                <KeyboardHelpRow label="Back / Front" keys="U / O" detail="visible faces" />
+                <KeyboardHelpRow label="Reverse" keys="Shift" detail="opposite turn" />
+              </div>
+            </details>
+            <Link to="/" className="settings-home-link">
               Back to home
             </Link>
           </div>
         </SheetContent>
       </Sheet>
     </>
+  );
+}
+
+function KeyboardHelpRow({ label, keys, detail }: { label: string; keys: string; detail: string }) {
+  return (
+    <div className="keyboard-help-row">
+      <span className="keyboard-help-label">{label}</span>
+      <kbd>{keys}</kbd>
+      <span className="keyboard-help-detail">{detail}</span>
+    </div>
   );
 }
 
@@ -183,14 +193,14 @@ function SettingRow({
   control: ReactNode;
 }) {
   return (
-    <div className="paper-card p-4">
-      <div className="mb-3 flex items-center justify-between gap-4">
+    <div className="setting-row">
+      <div className="setting-row-copy">
         <div>
-          <p className="text-sm font-extrabold text-[var(--text-primary)]">{label}</p>
-          <p className="text-xs font-semibold text-[var(--text-muted)]">{value}</p>
+          <p>{label}</p>
+          <span>{value}</span>
         </div>
       </div>
-      {control}
+      <div className="setting-row-control">{control}</div>
     </div>
   );
 }
